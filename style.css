@@ -1,148 +1,241 @@
+/* 🌟 Google Fonts */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@700&display=swap');
 * {
-    padding: 0;
     margin: 0;
-    font-weight: bold;
-    /* width: 100%; */
-    background-color: #63d46d;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+    transition: all 0.3s ease-in-out;
 }
 
-.owner {
-    height: 100px;
-    width: 100px;
-    background-image: url("imran2.jpeg");
-    border: 2px solid black;
-    background-size: cover;
-    border-radius: 50%;
-    box-shadow: 0px 10px 30px 10px rgba(255, 0, 0, 0.5);
-    margin-left: 300px;
-}
 
-.owner:hover {
-    border: 3px solid red;
-}
-
-.navbar {
-    width: 100%;
-    height: 50px;
-    border: 2px solid black;
-    background-color: #16ec28;
-    background: rgba(0, 255, 4, 0.7);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-radius: 14px;
-    box-shadow: 1px 2px 20px 2px;
-}
-
-.navbar:hover {
-    border: 3px solid red;
-}
-
-.picture {
-    margin-left: 10px;
-    display: flex;
-    height: 44px;
-    width: 44px;
-    border: 1px solid;
-    border-radius: 50%;
-    background-image: url("logo.jpg");
-    background-size: contain;
-    box-shadow: 0 0 15px rgb(255, 10, 10);
-}
-
-.picture:hover {
-    border: 2px solid #ffffff;
-    border-radius: 50%;
-}
+/* 🌿 Greenish Background with Enhanced Visibility */
 
 body {
-    /* background-image: url("imran2.jpg"); */
-    background-size: cover;
-    width: 100%;
+    background: linear-gradient(-45deg, #1b5e20, #2e7d32, #388e3c, #43a047);
+    background-size: 400% 400%;
+    animation: gradientBG 8s ease infinite;
     display: flex;
     flex-direction: column;
-}
-
-.MENU {
-    width: 60%;
-    display: flex;
+    justify-content: center;
     align-items: center;
-    justify-content: space-between;
-    background-color: #16ec28;
+    min-height: 100vh;
+    padding: 20px;
 }
 
-.MENU a {
-    text-decoration: none;
-    color: #ff0000;
-    text-shadow: #ffffff;
-    margin-right: 10px;
-    background-color: #16ec28;
+
+/* 🔄 Background Animation */
+
+@keyframes gradientBG {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
-.MENU a:hover {
-    color: #ffffff;
-}
 
+/* 🏆 Stylish & Smaller h1, h2 */
+
+h1,
 h2 {
+    color: #ffffff;
+    font-family: 'Playfair Display', serif;
+    text-transform: uppercase;
     text-align: center;
-    margin: 20px;
-    border: 2px solid #ffffff;
-    border-radius: 10px;
-    box-shadow: 1px 1px 20px 0.3px;
+    font-size: 1.4rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+    position: relative;
+    animation: fadeInScale 1s ease-in-out;
 }
 
-h2:hover {
-    border: 2px solid #ff0000;
-    background-color: #f2ff00;
+
+/* 🎇 Glowing Underline */
+
+h1::after,
+h2::after {
+    content: "";
+    display: block;
+    width: 50%;
+    height: 3px;
+    background: linear-gradient(90deg, #ffea00, #ffffff);
+    margin: 6px auto 0;
+    border-radius: 5px;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+    animation: glowEffect 1.5s infinite alternate;
 }
+
+
+/* 🎨 Stylish Form (No Blur on Hover) */
 
 #challanForm {
-    height: 100vh;
-    width: 50%;
-    border: 2px solid #ff0000;
+    background: linear-gradient(135deg, #ffffff, #e0f2f1);
+    padding: 30px;
+    width: 100%;
+    max-width: 450px;
     border-radius: 20px;
-    padding-left: 10px;
-    padding-top: 10px;
-    padding-right: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-self: center;
-    align-self: center;
-    box-shadow: 1px 1px 20px 0.3px;
+    box-shadow: 8px 8px 25px rgba(0, 0, 0, 0.3);
+    text-align: left;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    animation: fadeIn 1s ease-in-out;
 }
+
+
+/* ✨ Hover Effect for Form (Without Blur) */
+
+#challanForm:hover {
+    box-shadow: 0px 15px 50px rgba(0, 255, 127, 0.6);
+    transform: scale(1.02);
+}
+
+
+/* 🏆 High Visibility Labels */
 
 label {
-    font-size: 20px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #333;
+    display: block;
+    margin-bottom: 5px;
 }
 
-label:hover {
-    color: #ff0000;
-}
+
+/* 🎯 Clear & Readable Input Fields */
 
 input {
-    height: 40px;
-    border-radius: 15px;
-    color: #000000;
+    width: 100%;
+    padding: 12px;
+    /* margin-bottom: 12px; */
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    font-size: 15px;
+    outline: none;
+    background: rgba(255, 255, 255, 0.9);
+    color: #1b5e20;
+    text-align: left;
     padding-left: 10px;
-    font-size: medium;
-    background-color: #efcccc;
-    box-shadow: 1px 1px 20px 0.3px;
-    border: none;
+    transition: all 0.3s ease-in-out;
 }
 
+
+/* 🚀 Hover & Focus Effects for Inputs */
+
+input:focus,
 input:hover {
-    border: 2px solid red;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.9);
+    transform: scale(1.05);
 }
+
+
+/* 🎇 More Visible Buttons */
 
 button {
-    height: 60px;
-    margin-left: 10px;
-    margin-right: 10px;
-    border-radius: 20px;
-    background-color: #ffa500;
-    transition: 1.5s;
+    width: 100%;
+    padding: 12px;
+    /* margin-top: 12px; */
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #ffcc00, #ff9900);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0px 6px 20px rgba(255, 204, 0, 0.7);
 }
 
+
+/* 🌟 High Visibility Button Effects */
+
 button:hover {
-    background-color: #f80000;
+    background: linear-gradient(135deg, #ff9900, #ffcc00);
+    box-shadow: 0px 10px 30px rgba(255, 204, 0, 1);
+    transform: scale(1.06);
+}
+
+button:active {
+    transform: scale(0.95);
+}
+
+
+/* 📱 Fully Responsive for Mobile & Tablets */
+
+@media (max-width: 768px) {
+    #challanForm {
+        max-width: 100%;
+        padding: 25px;
+        border-radius: 15px;
+    }
+    input,
+    button {
+        font-size: 15px;
+    }
+}
+
+
+/* 🌟 Extra Browser Compatibility Tweaks */
+
+@supports (-webkit-backdrop-filter: none) {
+    #challanForm {
+        -webkit-backdrop-filter: blur(20px);
+    }
+}
+
+@supports not (-webkit-backdrop-filter: none) {
+    #challanForm {
+        background: rgba(255, 255, 255, 0.4);
+    }
+}
+
+
+/* 🖼 Glowing Image Container */
+
+.image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 20px;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+    animation: glowEffect 2.5s infinite alternate;
+}
+
+
+/* 🌟 Glowing Effect Animation */
+
+@keyframes glowEffect {
+    0% {
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 30px rgba(255, 255, 255, 1);
+    }
+    100% {
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+    }
+}
+
+.image-container img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.image-container img.active {
+    opacity: 1;
 }
