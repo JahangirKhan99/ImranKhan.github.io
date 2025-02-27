@@ -253,8 +253,8 @@ function autoPrintPDF(pdfUrl) {
 
     iframe.onload = function() {
         iframe.contentWindow.print();
-        // setTimeout(() => 
-            document.body.removeChild(iframe); // 5 سیکنڈ بعد iframe ہٹا دیں
+        setTimeout(() => document.body.removeChild(iframe), 10000);
+            // document.body.removeChild(iframe); // 5 سیکنڈ بعد iframe ہٹا دیں
     };
 }
 
