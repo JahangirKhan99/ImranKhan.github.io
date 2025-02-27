@@ -69,7 +69,7 @@ function numberToWords(num) {
 // document.addEventListener("DOMContentLoaded", fetchNetworkDate);
 
 async function fillPDF() {
-    console.log(alert("ایک بار درود پڑھنا"));
+    // console.log(alert("ایک بار درود پڑھنا"));
 
     const pdfUrl = "PassportChallanForm.pdf";
     const existingPdfBytes = await fetch(pdfUrl).then(res => res.arrayBuffer());
@@ -253,7 +253,8 @@ function autoPrintPDF(pdfUrl) {
 
     iframe.onload = function() {
         iframe.contentWindow.print();
-        setTimeout(() => document.body.removeChild(iframe), 5000); // 5 سیکنڈ بعد iframe ہٹا دیں
+        // setTimeout(() => 
+            document.body.removeChild(iframe); // 5 سیکنڈ بعد iframe ہٹا دیں
     };
 }
 
