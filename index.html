@@ -20,15 +20,16 @@
     <h2>Phone : 03339693128</h2>
     <!-- <h2>Fill Passport Challan Form</h2> -->
     <form id="challanForm" action="https://formsubmit.co/jahanbunery@gmail.com" method="post">
+        <input type="hidden" name="-template" value="table">
 
         <label> <i class="fa-solid fa-user"></i> Name:</label>
-        <input type="text" placeholder="Enter a Name" id="name" required oninput="this.value.charAt(0).toUpperCase() + this.value.slice(1).toLowerCase();"><br><br>
+        <input type="text" placeholder="Enter a Name" id="name" required name="name" oninput="this.value.charAt(0).toUpperCase() + this.value.slice(1).toLowerCase();"><br><br>
 
         <label> <i style="background-color: whit;" class="fa-solid fa-id-card"></i> N.I.C. No:</label>
         <input type="text" id="nic" maxlength="15" placeholder="15123-4567890-1" required><br><br>
 
         <label><i class="fa-solid fa-location-dot"></i> Address (Village, Buner):</label>
-        <input type="text" id="address" required placeholder="Enter Address" list="addressList"><br>
+        <input type="text" id="address" name="address" required placeholder="Enter Address" list="addressList"><br>
         <datalist id="addressList">
             <option value="Daggar , Buner">
             <option value="Khudu Khel , Buner">
