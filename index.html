@@ -19,21 +19,16 @@
     <h1>IMRAN KHAN PASSPORT NAWISI</h1>
     <h2>Phone : 03339693128</h2>
     <!-- <h2>Fill Passport Challan Form</h2> -->
-    <form id="challanForm"  type="hidden"  action="https://formsubmit.co/jahanbunery@gmail.com" method="post">
-        <input type="hidden" name="-template" value="table">
-                <input type="hidden" name="_captcha" value="false">
-                <input type="hidden" name="_next" value = "false">
-
-
+    <form id="challanForm">
 
         <label> <i class="fa-solid fa-user"></i> Name:</label>
-        <input type="text" placeholder="Enter a Name" id="name" required name="name" oninput="this.value.charAt(0).toUpperCase() + this.value.slice(1).toLowerCase();"><br><br>
+        <input type="text" placeholder="Enter a Name" id="name" oninput="this.value.charAt(0).toUpperCase() + this.value.slice(1).toLowerCase();"><br><br>
 
         <label> <i style="background-color: whit;" class="fa-solid fa-id-card"></i> N.I.C. No:</label>
-        <input type="text" id="nic" maxlength="15" placeholder="15123-4567890-1" required><br><br>
+        <input type="text" id="nic" maxlength="15" placeholder="15123-4567890-1"><br><br>
 
         <label><i class="fa-solid fa-location-dot"></i> Address (Village, Buner):</label>
-        <input type="text" id="address" name="address" required placeholder="Enter Address" list="addressList"><br>
+        <input type="text" id="address" placeholder="Enter Address" list="addressList"><br>
         <datalist id="addressList">
             <option value="Daggar , Buner">
             <option value="Khudu Khel , Buner">
@@ -49,7 +44,7 @@
         <input type="number" id="amount" placeholder="Write amount in digits. (i.e 5000)" oninput="convertAmount()"><br>
         <small id="amountWords" class="amount-text"></small><br><br>
 
-        <button type="submit" onclick="fillPDF()">Download & Print</button>
+        <button type="button" onclick="fillPDF()">Download & Print</button>
     </form>
 
     <footer>
@@ -58,16 +53,25 @@
         <br><br>
         <p>Imran khan passport nawisi swari buner </p>
         <p>All Rights Reserved</p>
-        <p> Whatsapp Number <a href="https://wa.me/923339693128"> 03339693128</a>
-            <p> Email <a href="mailto:hpsimrankhanbunery@gmail.com"> hpsimrankhanbunery@gmail.com</a>
+        <p> Whatsapp Number <a href="#"> 03339693128</a>
+            <p> Email <a href="#"> hpsimrankhanbunery@gmail.com</a>
             </p>
             <p>Adress : Swari Buner near Passport office </p>
-            <h3>note</h3>
+            <h6>note</h6>
             <p>"This website is only for filling forms . We are not resposible for any incorrectly filled forms </p>
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.16.0/pdf-lib.min.js"></script>
     <script src="script.js"></script>
+    <script type="module">
+  import { initializePDFScript, fillPDF, convertAmount } from './src/script.js';
+  
+  document.addEventListener('DOMContentLoaded', initializePDFScript);
+  
+  document.getElementById('downloadBtn')?.addEventListener('click', fillPDF);
+  document.getElementById('amount')?.addEventListener('input', convertAmount);
+</script>
+
 </body>
 
 </html>
