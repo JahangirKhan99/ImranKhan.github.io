@@ -13,7 +13,7 @@
 /* 🌿 Greenish Background with Enhanced Visibility */
 
 body {
-    background: linear-gradient(-45deg, #1b5e20, #2e7d32, #388e3c, #43a047);
+    background: linear-gradient(-45deg, #1b5e5d, #e10808, #42610c, #43a047);
     background-size: 400% 400%;
     animation: gradientBG 8s ease infinite;
     display: flex;
@@ -240,14 +240,37 @@ button:active {
     opacity: 1;
 }
 
-footer { background-color: #333; color: white; text-align: center; padding: 20px; position: relative; bottom: 0; width: 100%; }
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
 
-footer a { color: #f1c40f; text-decoration: none; margin: 0 10px; }
+footer a {
+    color: #f1c40f;
+    text-decoration: none;
+    margin: 0 10px;
+}
 
-footer a:hover { text-decoration: underline; }
+footer a:hover {
+    text-decoration: underline;
+}
 
-.footer-container { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.footer-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 
-.footer-links { margin: 10px 0; }
+.footer-links {
+    margin: 10px 0;
+}
 
-.footer-contact { font-size: 14px; }
+.footer-contact {
+    font-size: 14px;
+}
