@@ -117,13 +117,13 @@ async function fillPDF() {
         size: 12,
         color: rgb(0, 0, 0)
     });
-    firstPage.drawText(`${amount}`, {
+    firstPage.drawText(`${amount}`+"/-", {
         x: 220,
         y: 165,
         size: 12,
         color: rgb(0, 0, 0)
     });
-    firstPage.drawText(`${amount}`, {
+    firstPage.drawText(`${amount}`+"/-", {
         x: 220,
         y: 300,
         size: 12,
@@ -163,13 +163,13 @@ async function fillPDF() {
         size: 12,
         color: rgb(0, 0, 0)
     });
-    firstPage.drawText(`${amount}`, {
+    firstPage.drawText(`${amount}`+"/-", {
         x: 220 + 320,
         y: 165,
         size: 12,
         color: rgb(0, 0, 0)
     });
-    firstPage.drawText(`${amount}`, {
+    firstPage.drawText(`${amount}`+"/-", {
         x: 220 + 320,
         y: 300,
         size: 12,
@@ -210,13 +210,13 @@ async function fillPDF() {
         size: 12,
         color: rgb(0, 0, 0)
     });
-    firstPage.drawText(`${amount}`, {
+    firstPage.drawText(`${amount}`+"/-", {
         x: 220 + 650,
         y: 165,
         size: 12,
         color: rgb(0, 0, 0)
     });
-    firstPage.drawText(`${amount}`, {
+    firstPage.drawText(`${amount}`+"/-", {
         x: 220 + 650,
         y: 300,
         size: 12,
@@ -274,4 +274,5 @@ document.addEventListener("keydown", function(event) {
         fillPDF();                // same button wala function chalayega
     }
 });
+
 
