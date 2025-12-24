@@ -266,3 +266,12 @@ setInterval(() => {
     index = (index + 1) % images.length;
     images[index].classList.add('active');
 }, 5000);
+
+// ⭐⭐⭐ ENTER key par auto Download + Print ⭐⭐⭐
+document.addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();   // form submit rok do
+        fillPDF();                // same button wala function chalayega
+    }
+});
+
