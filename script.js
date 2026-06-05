@@ -1,278 +1,245 @@
-document.getElementById("nic").addEventListener("input", function() {
-
-    let value = this.value.replace(/\D/g, "");
-    if (value.length > 13) value = value.slice(0, 13);
-    if (value.length > 5) value = value.replace(/(\d{5})(\d{0,7})/, "$1-$2");
-    if (value.length > 12) value = value.replace(/(\d{5})-(\d{7})(\d{0,1})/, "$1-$2-$3");
-    this.value = value;
-});
-
-// 🔹 رقم کو الفاظ میں تبدیل کریں
+// ─── Amount to Words ───
 function convertAmount() {
     let num = document.getElementById("amount").value;
-    document.getElementById("amountWords").innerText = num ? (`${numberToWords(num)}`) : "";
+    document.getElementById("amountWords").innerText = num ? numberToWords(num) + " Rupees Only" : "";
 }
 
-// 🔹 رقم کو انگلش میں تبدیل کریں
 function numberToWords(num) {
-    const a = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten",
-        "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen",
-        "Eighteen", "Nineteen"
-    ];
-    const b = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
-
+    const a = ["","One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten",
+        "Eleven","Twelve","Thirteen","Fourteen","Fifteen","Sixteen","Seventeen","Eighteen","Nineteen"];
+    const b = ["","","Twenty","Thirty","Forty","Fifty","Sixty","Seventy","Eighty","Ninety"];
+    num = parseInt(num);
     if (num < 20) return a[num];
-    if (num < 100) return b[Math.floor(num / 10)] + (num % 10 ? " " + a[num % 10] : "");
-    if (num < 1000) return a[Math.floor(num / 100)] + " Hundred" + (num % 100 ? " " + numberToWords(num % 100) : "");
-    if (num < 1000000) return numberToWords(Math.floor(num / 1000)) + " Thousand" + (num % 1000 ? " " + numberToWords(num % 1000) : "");
+    if (num < 100) return b[Math.floor(num/10)] + (num%10 ? " " + a[num%10] : "");
+    if (num < 1000) return a[Math.floor(num/100)] + " Hundred" + (num%100 ? " " + numberToWords(num%100) : "");
+    if (num < 1000000) return numberToWords(Math.floor(num/1000)) + " Thousand" + (num%1000 ? " " + numberToWords(num%1000) : "");
     return num;
 }
 
+function getDateStr() {
+    const date = new Date();
+    let day = String(date.getDate()).padStart(2,'0');
+    let month = String(date.getMonth()+1).padStart(2,'0');
+    let year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+}
 
-// async function fillPDF() {
-//     console.log(alert("ایک بار درود پڑھنا"));
+function validateForm() {
+    const name = document.getElementById("name").value.trim();
+    const address = document.getElementById("address").value.trim();
+    const amount = document.getElementById("amount").value.trim();
+    if (!name) { alert("Naam darj karein!"); document.getElementById("name").focus(); return false; }
+    if (!address) { alert("Tehsil darj karein!"); document.getElementById("address").focus(); return false; }
+    if (!amount || parseInt(amount) <= 0) { alert("Sahi raqam darj karein!"); document.getElementById("amount").focus(); return false; }
+    return true;
+}
 
-//     const pdfUrl = "PassportChallanForm.pdf";
-//     const existingPdfBytes = await fetch(pdfUrl).then(res => res.arrayBuffer());
-
-//     const { PDFDocument, rgb } = PDFLib;
-//     const pdfDoc = await PDFDocument.load(existingPdfBytes);
-//     const pages = pdfDoc.getPages();
-//     const firstPage = pages[0];
-
-//     const date = new Date().toLocaleDateString();
-//     const name = document.getElementById("name").value;
-//     const nic = document.getElementById("nic").value;
-//     const address = document.getElementById("address").value;
-//     const amount = document.getElementById("amount").value;
-//     const amountWords = numberToWords(amount);
-
-
-//     firstPage.drawText(`Date: ${date}`, { x: 100, y: 600, size: 12, color: rgb(0, 0, 0) });
-//     firstPage.drawText(`Name: ${name}`, { x: 100, y: 570, size: 12, color: rgb(0, 0, 0) });
-//     firstPage.drawText(`CNIC: ${nic}`, { x: 100, y: 540, size: 12, color: rgb(0, 0, 0) });
-//     firstPage.drawText(`Address: ${address}`, { x: 100, y: 510, size: 12, color: rgb(0, 0, 0) });
-//     firstPage.drawText(`Amount: Rs. ${amount}`, { x: 100, y: 480, size: 12, color: rgb(0, 0, 0) });
-//     firstPage.drawText(`Amount in Words: ${amountWords}`, { x: 100, y: 450, size: 12, color: rgb(0, 0, 0) });
-
-//     const pdfBytes = await pdfDoc.save();
-//     const blob = new Blob([pdfBytes], { type: "application/pdf" });
-//     const link = document.createElement("a");
-//     link.href = URL.createObjectURL(blob);
-
-//     link.click();
-
-
-// }
-
-// // 🔹 جب پیج لوڈ ہو، تو نیٹ ورک سے تاریخ حاصل کریں
-// document.addEventListener("DOMContentLoaded", fetchNetworkDate);
-
-async function fillPDF() {
-    // console.log(alert("ایک بار درود پڑھنا"));
-
+async function buildPDF() {
     const pdfUrl = "PassportChallanForm.pdf";
     const existingPdfBytes = await fetch(pdfUrl).then(res => res.arrayBuffer());
-
     const { PDFDocument, rgb } = PDFLib;
     const pdfDoc = await PDFDocument.load(existingPdfBytes);
     const pages = pdfDoc.getPages();
     const firstPage = pages[0];
-
-    const date = new Date();
-    let day = String(date.getDate()).padStart(2, '0');
-    let month = String(date.getMonth() + 1).padStart(2, '0');
-    let year = date.getFullYear();
-    let tareh = `${day}/${month}/${year} `;
-    const name = document.getElementById("name").value;
-    const nic = document.getElementById("nic").value;
-    const address = document.getElementById("address").value;
-    const amount = document.getElementById("amount").value;
+    const tareh = getDateStr();
+    const name = document.getElementById("name").value.trim();
+    const address = document.getElementById("address").value.trim();
+    const amount = document.getElementById("amount").value.trim();
     const amountWords = numberToWords(amount);
-
-    // 1st page
-
-    firstPage.drawText(` ${tareh}`, {
-        x: 220,
-        y: 513,
-        size: 12,
-        color: rgb(0, 0, 0)
-    });
-
-    firstPage.drawText(`${name}`, {
-        x: 100,
-        y: 479,
-        size: 12,
-        color: rgb(0, 0, 0)
-    });
-    firstPage.drawText(` ${nic}`, {
-        x: 100,
-        y: 460,
-        size: 12,
-        color: rgb(0, 0, 0)
-    });
-    firstPage.drawText(` ${address}`, {
-        x: 100,
-        y: 444,
-        size: 12,
-        color: rgb(0, 0, 0)
-    });
-    firstPage.drawText(`${amount}`+"/-", {
-        x: 220,
-        y: 165,
-        size: 12,
-        color: rgb(0, 0, 0)
-    });
-    firstPage.drawText(`${amount}`+"/-", {
-        x: 220,
-        y: 300,
-        size: 12,
-        color: rgb(0, 0, 0)
-    });
-
-    firstPage.drawText(`${amountWords}`, {
-        x: 80,
-        y: 140,
-        size: 10,
-        color: rgb(0, 0, 0)
-    });
-    // 2nd page
-
-    firstPage.drawText(` ${tareh}`, {
-        x: 220 + 320,
-        y: 513,
-        size: 12,
-        color: rgb(0, 0, 0)
-    });
-
-    firstPage.drawText(`${name}`, {
-        x: 100 + 310,
-        y: 479,
-        size: 12,
-        color: rgb(0, 0, 0)
-    });
-    firstPage.drawText(` ${nic}`, {
-        x: 100 + 310,
-        y: 460,
-        size: 12,
-        color: rgb(0, 0, 0)
-    });
-    firstPage.drawText(` ${address}`, {
-        x: 100 + 310,
-        y: 444,
-        size: 12,
-        color: rgb(0, 0, 0)
-    });
-    firstPage.drawText(`${amount}`+"/-", {
-        x: 220 + 320,
-        y: 165,
-        size: 12,
-        color: rgb(0, 0, 0)
-    });
-    firstPage.drawText(`${amount}`+"/-", {
-        x: 220 + 320,
-        y: 300,
-        size: 12,
-        color: rgb(0, 0, 0)
-    });
-
-    firstPage.drawText(`${amountWords}`, {
-        x: 90 + 310,
-        y: 140,
-        size: 10,
-        color: rgb(0, 0, 0)
-    });
-
-    // 3rd page
-
-    firstPage.drawText(` ${tareh}`, {
-        x: 220 + 650,
-        y: 513,
-        size: 12,
-        color: rgb(0, 0, 0)
-    });
-
-    firstPage.drawText(`${name}`, {
-        x: 100 + 650,
-        y: 479,
-        size: 12,
-        color: rgb(0, 0, 0)
-    });
-    firstPage.drawText(` ${nic}`, {
-        x: 100 + 650,
-        y: 460,
-        size: 12,
-        color: rgb(0, 0, 0)
-    });
-    firstPage.drawText(` ${address}`, {
-        x: 100 + 650,
-        y: 444,
-        size: 12,
-        color: rgb(0, 0, 0)
-    });
-    firstPage.drawText(`${amount}`+"/-", {
-        x: 220 + 650,
-        y: 165,
-        size: 12,
-        color: rgb(0, 0, 0)
-    });
-    firstPage.drawText(`${amount}`+"/-", {
-        x: 220 + 650,
-        y: 300,
-        size: 12,
-        color: rgb(0, 0, 0)
-    });
-
-    firstPage.drawText(`${amountWords}`, {
-        x: 90 + 640,
-        y: 140,
-        size: 10,
-        color: rgb(0, 0, 0)
-    });
-
-    const pdfBytes = await pdfDoc.save();
-    const blob = new Blob([pdfBytes], { type: "application/pdf" });
-    const pdfUrlBlob = URL.createObjectURL(blob);
-
-    // 🔹 PDF ڈاؤن لوڈ کریں
-    const link = document.createElement("a");
-    link.href = pdfUrlBlob;
-    link.download = `PassportChallan_${name}.pdf`;
-    link.click();
-
-    // 🔹 خودکار پرنٹ کریں (اگر پرنٹر موجود ہو)
-    autoPrintPDF(pdfUrlBlob);
+    firstPage.drawText(` ${tareh}`,      { x: 100, y: 490, size: 14, color: rgb(0,0,0) });
+    firstPage.drawText(`${name}`,        { x: 100, y: 464, size: 14, color: rgb(0,0,0) });
+    firstPage.drawText(` ${address}`,    { x: 330, y: 440, size: 14, color: rgb(0,0,0) });
+    firstPage.drawText(`${amount}/-`,    { x: 290, y: 250, size: 14, color: rgb(0,0,0) });
+    firstPage.drawText(`${amount}/-`,    { x: 290, y: 105, size: 14, color: rgb(0,0,0) });
+    firstPage.drawText(`${amountWords}`, { x: 110, y: 88,  size: 11, color: rgb(0,0,0) });
+    firstPage.drawText(` ${tareh}`,      { x: 470, y: 490, size: 14, color: rgb(0,0,0) });
+    firstPage.drawText(`${name}`,        { x: 490, y: 464, size: 14, color: rgb(0,0,0) });
+    firstPage.drawText(` ${address}`,    { x: 720, y: 440, size: 14, color: rgb(0,0,0) });
+    firstPage.drawText(`${amount}/-`,    { x: 680, y: 250, size: 14, color: rgb(0,0,0) });
+    firstPage.drawText(`${amount}/-`,    { x: 680, y: 105, size: 14, color: rgb(0,0,0) });
+    firstPage.drawText(`${amountWords}`, { x: 500, y: 88,  size: 11, color: rgb(0,0,0) });
+    return await pdfDoc.save();
 }
 
-// 🔹 خودکار پرنٹ فنکشن
-function autoPrintPDF(pdfUrl) {
-    const iframe = document.createElement("iframe");
-    iframe.style.visibility = "hidden";
-    iframe.src = pdfUrl;
-    document.body.appendChild(iframe);
+async function handleDownload() {
+    if (!validateForm()) return;
+    const name = document.getElementById("name").value.trim();
+    const address = document.getElementById("address").value.trim();
+    const amount = document.getElementById("amount").value.trim();
+    try {
+        const pdfBytes = await buildPDF();
+        const blob = new Blob([pdfBytes], { type: "application/pdf" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `Challan_${name}.pdf`;
+        link.click();
+        saveToHistory(name, address, amount);
+    } catch(e) {
+        alert("PDF load nahi hui. PassportChallanForm.pdf folder mein rakhein.");
+    }
+}
 
-    iframe.onload = function() {
-        iframe.contentWindow.print();
-        setTimeout(() => document.body.removeChild(iframe), 10000);
-            // document.body.removeChild(iframe); // 5 سیکنڈ بعد iframe ہٹا دیں
+async function handlePrint() {
+    if (!validateForm()) return;
+    const name = document.getElementById("name").value.trim();
+    const address = document.getElementById("address").value.trim();
+    const amount = document.getElementById("amount").value.trim();
+    try {
+        const pdfBytes = await buildPDF();
+        const blob = new Blob([pdfBytes], { type: "application/pdf" });
+        const url = URL.createObjectURL(blob);
+
+        // New tab mein kholo — PDF viewer bypass hoga, seedha print dialog
+        const printWindow = window.open(url, '_blank');
+        if (printWindow) {
+            printWindow.addEventListener('load', function() {
+                printWindow.focus();
+                printWindow.print();
+                // Print hone ke baad tab band
+                printWindow.addEventListener('afterprint', function() {
+                    printWindow.close();
+                    URL.revokeObjectURL(url);
+                });
+            });
+        } else {
+            // Popup block ho to iframe fallback
+            const iframe = document.createElement("iframe");
+            iframe.style.cssText = "position:fixed;left:-9999px;top:-9999px;width:0;height:0;border:none;";
+            iframe.src = url;
+            document.body.appendChild(iframe);
+            iframe.onload = function() {
+                iframe.contentWindow.focus();
+                iframe.contentWindow.print();
+                setTimeout(() => { document.body.removeChild(iframe); URL.revokeObjectURL(url); }, 20000);
+            };
+        }
+        saveToHistory(name, address, amount);
+    } catch(e) {
+        alert("PDF load nahi hui. PassportChallanForm.pdf folder mein rakhein.");
+    }
+}
+
+async function fillPDF() {
+    if (!validateForm()) return;
+    const name = document.getElementById("name").value.trim();
+    const address = document.getElementById("address").value.trim();
+    const amount = document.getElementById("amount").value.trim();
+    try {
+        const pdfBytes = await buildPDF();
+        const blob = new Blob([pdfBytes], { type: "application/pdf" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `Challan_${name}.pdf`;
+        link.click();
+        const printWindow = window.open(url, '_blank');
+        if (printWindow) {
+            printWindow.addEventListener('load', function() {
+                printWindow.focus();
+                printWindow.print();
+                printWindow.addEventListener('afterprint', function() {
+                    printWindow.close();
+                    URL.revokeObjectURL(url);
+                });
+            });
+        } else {
+            const iframe = document.createElement("iframe");
+            iframe.style.cssText = "position:fixed;left:-9999px;top:-9999px;width:0;height:0;border:none;";
+            iframe.src = url;
+            document.body.appendChild(iframe);
+            iframe.onload = function() {
+                iframe.contentWindow.focus();
+                iframe.contentWindow.print();
+                setTimeout(() => { document.body.removeChild(iframe); URL.revokeObjectURL(url); }, 20000);
+            };
+        }
+        saveToHistory(name, address, amount);
+    } catch(e) {
+        alert("PDF load nahi hui. PassportChallanForm.pdf folder mein rakhein.");
+    }
+}
+
+function saveToHistory(name, address, amount) {
+    const history = getHistory();
+    const entry = {
+        id: Date.now(),
+        name, address, amount,
+        date: getDateStr(),
+        time: new Date().toLocaleTimeString('en-PK', { hour: '2-digit', minute: '2-digit' })
     };
+    history.unshift(entry);
+    if (history.length > 50) history.pop();
+    localStorage.setItem("challanHistory", JSON.stringify(history));
+    renderHistory();
 }
 
+function getHistory() {
+    try { return JSON.parse(localStorage.getItem("challanHistory")) || []; }
+    catch { return []; }
+}
+
+function renderHistory() {
+    const list = document.getElementById("historyList");
+    const history = getHistory();
+    if (history.length === 0) {
+        list.innerHTML = `<div class="empty-state"><i class="fa-solid fa-inbox"></i><p>Abhi koi record nahi hai</p></div>`;
+        return;
+    }
+    list.innerHTML = history.map((item, idx) => `
+        <div class="history-item">
+            <div class="history-num">${idx + 1}</div>
+            <div class="history-details">
+                <div class="history-name">${item.name}</div>
+                <div class="history-meta">
+                    <i class="fa-solid fa-location-dot" style="font-size:10px"></i> ${item.address}
+                    &nbsp;&bull;&nbsp;
+                    <i class="fa-solid fa-clock" style="font-size:10px"></i> ${item.date} ${item.time}
+                </div>
+            </div>
+            <div class="history-amount">Rs. ${parseInt(item.amount).toLocaleString()}</div>
+            <button class="history-reprint" onclick="reprintRecord(${item.id})" title="Reprint">
+                <i class="fa-solid fa-print"></i>
+            </button>
+        </div>
+    `).join('');
+}
+
+function reprintRecord(id) {
+    const history = getHistory();
+    const item = history.find(h => h.id === id);
+    if (!item) return;
+    document.getElementById("name").value = item.name;
+    document.getElementById("address").value = item.address;
+    document.getElementById("amount").value = item.amount;
+    convertAmount();
+    handlePrint();
+}
+
+function clearHistory() {
+    if (confirm("Kya aap sari history delete karna chahte hain?")) {
+        localStorage.removeItem("challanHistory");
+        renderHistory();
+    }
+}
+
+// Image slider
 let images = document.querySelectorAll('.image-container img');
-let index = 0;
+let imgIndex = 0;
+if (images.length > 1) {
+    setInterval(() => {
+        images[imgIndex].classList.remove('active');
+        imgIndex = (imgIndex + 1) % images.length;
+        images[imgIndex].classList.add('active');
+    }, 5000);
+}
 
-setInterval(() => {
-    images[index].classList.remove('active');
-    index = (index + 1) % images.length;
-    images[index].classList.add('active');
-}, 5000);
-
-// ⭐⭐⭐ ENTER key par auto Download + Print ⭐⭐⭐
+// Enter key
 document.addEventListener("keydown", function(event) {
     if (event.key === "Enter") {
-        event.preventDefault();   // form submit rok do
-        fillPDF();                // same button wala function chalayega
+        event.preventDefault();
+        handlePrint();
     }
 });
 
-
+window.addEventListener("load", renderHistory);
